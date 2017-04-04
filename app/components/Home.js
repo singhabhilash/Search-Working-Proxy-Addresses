@@ -1,15 +1,40 @@
 // @flow
 import React, { Component } from 'react';
-import styles from './Home.css';
 
 const Home = ({ requestProxySearch, workingProxyArray, state }) => {
+  const styleWrap = {
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'stretch',
+    height: '100vh',
+    flexGrow: 1
+  };
+
+  const styleOptions = {
+    flexBasis: '50%',
+  }
+
+  const styleResults = {
+    background: 'rgba(0, 0, 0, .1)',
+    flexBasis: '50%'
+  }
+
   return (
-    <div>
-      <div className={styles.container} data-tid="container">
-        <h2>Home</h2>
+    <div style={styleWrap}>
+      <div className="options" style={styleOptions}>
+        <div>
+          Full Search
+          <button onClick={() => requestProxySearch()}>start search</button>
+        </div>
+
+        <div>
+          Quick Search
+        </div>
       </div>
-      <button onClick={() => requestProxySearch()}>start search</button>
-      <button onClick={() => console.log(state)}>Console state</button>
+
+      <div className="results" style={styleResults}>
+      </div>
+
     </div>
   );
 }
