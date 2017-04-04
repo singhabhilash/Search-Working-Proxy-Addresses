@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+let Halogen = require('halogen')
 
 const Home = ({ requestProxySearch, workingProxyArray, state }) => {
   const styleWrap = {
@@ -31,12 +32,12 @@ const Home = ({ requestProxySearch, workingProxyArray, state }) => {
 
   const stylePara = {
     fontSize: '14px',
-    color: 'rgba(255, 255, 255, .35)'
+    color: 'rgba(255, 255, 255, .25)'
   }
 
   const styleSearchQuick = {
-    flexBasis: '35%',
-    borderBottom: '1px solid rgba(255, 255, 255, .1)'
+    flexBasis: '30%',
+    borderBottom: '1px solid rgba(255, 255, 255, .05)'
   }
 
   const styleSearchFull = {
@@ -50,9 +51,9 @@ const Home = ({ requestProxySearch, workingProxyArray, state }) => {
     height: '48px',
     fontSize: '18px',
     color: 'white',
-    marginTop: '16px',
     padding: '0 32px',
     borderRadius: '2px',
+    marginRight: '24px'
   }
 
   const styleSeparator = {
@@ -62,14 +63,30 @@ const Home = ({ requestProxySearch, workingProxyArray, state }) => {
     paddingTop: '60px'
   }
 
+  const styleLoader = {
+    height: '24px!important',
+    width: '24px!important'
+  }
+
+  const styleButtonWrap = {
+    marginTop: '16px',
+    display: 'flex',
+    alignItems: 'center',
+  }
+
   return (
     <div style={styleWrap}>
       <div className="options" style={styleOptions}>
         <div style={styleSearchQuick}>
           <h2 style={styleH2}>Fast Search</h2>
           <p style={stylePara}>Searches only working proxies stored in the database.</p>
-          <button style={styleButton} onClick={() => requestProxySearch()}>Search</button>
+          <div style={styleButtonWrap}>
+            <button style={styleButton} onClick={() => requestProxySearch()}>Search</button>
+
+            <Halogen.BounceLoader color={'white'} size="24px" />
+          </div>
         </div>
+
         <div style={styleSearchFull}>
           <h2 style={styleH2}>Full Search</h2>
           <p style={stylePara}>
@@ -83,7 +100,6 @@ const Home = ({ requestProxySearch, workingProxyArray, state }) => {
 
       <div className="results" style={styleResults}>
       </div>
-
     </div>
   );
 }
