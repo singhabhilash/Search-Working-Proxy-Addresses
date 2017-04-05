@@ -30,18 +30,23 @@ function doFullSearch(intervalGap = 1000, dispatch) {
   this.currentPosition = 0;
   this.elementsLength = 256;
   this.baseUrl = 'http://172.16.';
+  this.interval = null;
 
   this.startSearching = function () {
     dispatch(searchStarted());
     this.currentPosition = 0;
-    setInterval(
+    this.interval = setInterval(
       this.calc256.bind(this),
       intervalGap
     );
   }
 
   this.calc256 = function () {
-    if (this.currentPosition > this.elementsLength) return;
+    if (this.currentPosition > this.elementsLength) {
+      dispatch(searchFinished());
+      clearInterval(this.interval);
+      return;
+    };
 
     var n = this.currentPosition;
 
@@ -68,10 +73,10 @@ export const requestQuickProxySearchDispatcher = () => (dispatch) => {
 }
 
 function doQuickSearch(arrayProxyUrl, dispatch) {
-  for( let url of arrayProxyUrl ) {
-    let proxiedRequest = request.defaults({proxy: url});
-    proxiedRequest.get('http://google.com', function(err, res) {
-      if(checkSanityRes(res)) {
+  for (let url of arrayProxyUrl) {
+    let proxiedRequest = request.defaults({ proxy: url });
+    proxiedRequest.get('http://google.com', function (err, res) {
+      if (checkSanityRes(res)) {
         //Proxy is working, dispatch action
       }
     });
@@ -81,7 +86,7 @@ function doQuickSearch(arrayProxyUrl, dispatch) {
 
 
 function checkSanityRes(res) {
-  if(res && res.statusCode === 200 && res.body.substring(0, 300).indexOf('google') > 0)
+  if (res && res.statusCode === 200 && res.body.substring(0, 300).indexOf('google') > 0)
     return true;
   return false;
 }
