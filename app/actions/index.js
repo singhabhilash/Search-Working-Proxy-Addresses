@@ -20,7 +20,7 @@ const foundResult = (workingUrl) => ({
   result: workingUrl
 })
 
-export const requestFullProxySearchDispatcher = (intervalGap) => (dispatch) => {]
+export const requestFullProxySearchDispatcher = (intervalGap) => (dispatch) => {
   dispatch(requestSearch());
   let iter = new doFullSearch(intervalGap, dispatch);
   iter.startSearching();

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 let Halogen = require('halogen')
 
-const Home = ({ requestProxySearch, workingProxyArray, state }) => {
+const Home = ({ requestFullProxySearch, workingProxyArray, isSearching }) => {
   const styleWrap = {
     display: 'flex',
     flexDirection: 'row',
@@ -81,9 +81,12 @@ const Home = ({ requestProxySearch, workingProxyArray, state }) => {
           <h2 style={styleH2}>Fast Search</h2>
           <p style={stylePara}>Searches only working proxies stored in the database.</p>
           <div style={styleButtonWrap}>
-            <button style={styleButton} onClick={() => requestProxySearch()}>Search</button>
+            <button style={styleButton} onClick={() => requestFullProxySearch()}>Search</button>
 
-            <Halogen.BounceLoader color={'white'} size="24px" />
+            {
+              isSearching && 
+              <Halogen.BounceLoader color={'white'} size="24px" />
+            }
           </div>
         </div>
 

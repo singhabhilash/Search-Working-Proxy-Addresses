@@ -1,24 +1,24 @@
 // @flow
 import React, { Component } from 'react';
 import Home from '../components/Home';
-import { requestProxySearch } from '../actions';
+import { requestFullProxySearchDispatcher } from '../actions';
 import { connect } from 'react-redux';
 
-const HomePage = ({ requestProxySearch, workingProxyArray, state }) => (
+const HomePage = ({ workingProxyArray, isSearching, requestFullProxySearch }) => (
   <Home
-    requestProxySearch={requestProxySearch}
+    requestFullProxySearch={requestFullProxySearch}
     workingProxyArray={workingProxyArray}
-    state={state}
+    isSearching={isSearching}
   />
 );
 
 const mapStateToProps = (state) => ({
-  workingProxyArray: state.workingProxyArray,
-  state: state
+  workingProxyArray: state.main.urlArray,
+  isSearching: state.main.isSearching
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  requestProxySearch: () => { dispatch(requestProxySearch()) }
+  requestFullProxySearch: () => { dispatch(requestFullProxySearchDispatcher()) }
 });
 
 export default connect(

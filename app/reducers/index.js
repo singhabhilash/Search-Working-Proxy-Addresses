@@ -1,10 +1,10 @@
 // @flow
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
-import workingProxyArray from './workingProxyArray';
+import main from './main';
 
 const rootReducer = combineReducers({
-  workingProxyArray,
+  main,
   routing
 });
 
