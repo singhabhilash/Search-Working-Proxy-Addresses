@@ -177,6 +177,7 @@ export default class MenuBuilder {
       }]
     }];
 
+    this.mainWindow.openDevTools();
     return templateDefault;
   }
 }

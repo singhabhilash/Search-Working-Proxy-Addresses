@@ -2,7 +2,7 @@
   "javascript.validate.enable": false,
   "search.exclude": {
     ".git": true,
-    "node_modules": true,
+    "**/node_modules": false,
     "flow-typed": true,
     "bower_components": true
   }

@@ -3,6 +3,14 @@ import React, { Component } from 'react';
 let Halogen = require('halogen');
 import styles from './Home.css';
 
+const devProxyArray = [
+  '0.0.0.0.:8080',
+  '0.0.0.0.:8080',
+  '0.0.0.0.:8080',
+  '0.0.0.0.:8080',
+  '0.0.0.0.:8080'
+];
+
 const Home = ({
   requestFullProxySearch,
   workingProxyArray,
@@ -12,6 +20,7 @@ const Home = ({
 }) => {
   const classFull = selectedType === 'full' ? styles.selected : null;
   const classQuick = selectedType === 'quick' ? styles.selected : null;
+  workingProxyArray = devProxyArray;
   return (
     <div className={styles.wrap}>
       <div className={styles.options}>
@@ -27,7 +36,7 @@ const Home = ({
         </div>
 
         <div className={styles.search + ' ' + classQuick}
-          onClick={() => { if (selectedType !== 'quick') {console.log('sinside fi'); toggleSelectedType()}; console.log('click quick', selectedType) }}
+          onClick={() => { if (selectedType !== 'quick') toggleSelectedType()}}
         >
           <h2 className={styles.styleH2}>Quick Search</h2>
           <p className={styles.stylePara}>Searches only working proxies stored in the database.</p>
@@ -38,9 +47,6 @@ const Home = ({
 
       </div>
 
-
-
-
       <div className={styles.results}>
         <p style={{ color: 'rgba(255, 255, 255, .5)' }}>Search Results</p>
         {
@@ -49,7 +55,7 @@ const Home = ({
         }
         {
           workingProxyArray.map((url, index) => {
-            return <div style={{ display: 'flex', width: '300px', padding: '12px', paddingLeft: '30px', margin: '12px', borderLeft: '2px solid rgba(255, 255, 255, .5)', background: 'rgba(0, 0, 0, .2)' }} key={index}>{url}</div>
+            return <div className={styles.resultItem} key={index}>{url}</div>
           })
         }
       </div>

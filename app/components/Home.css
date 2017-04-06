@@ -67,3 +67,13 @@ button:hover {
   box-shadow: 0 1px 4px rgba(255, 255, 255, .1);
   background: rgba(0, 0, 0, .2);
 }
+
+.resultItem {
+  display: flex;
+  width: 300px;
+  padding: 12px;
+  padding-left: 30px;
+  margin: 12px;
+  border-left: 2px solid rgba(255, 255, 255, .5);
+  background: rgba(0, 0, 0, .2);
+}
