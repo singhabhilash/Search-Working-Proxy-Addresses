@@ -18,7 +18,11 @@ const searchFinished = () => ({
 const foundResult = (workingUrl) => ({
   type: actionTypes.FOUND_RESULT,
   result: workingUrl
-})
+});
+
+export const toggleSelectedType = () => ({
+  type: actionTypes.TOGGLE_SELECTED_TYPE
+});
 
 export const requestFullProxySearchDispatcher = (intervalGap) => (dispatch) => {
   dispatch(requestSearch());
