@@ -3,8 +3,9 @@ import * as actionTypes from '../constants/actionTypes';
 
 import insertProxyInDatabase from '../apis/db';
 
-const requestSearch = () => ({
-  type: actionTypes.REQUEST_SEARCH
+const requestSearch = (searchType) => ({
+  type: actionTypes.REQUEST_SEARCH,
+  currentSearchType: searchType
 });
 
 const searchStarted = () => ({
@@ -27,14 +28,14 @@ const stopSearching = () => ({
 });
 
 
-export const requestFullProxySearchDispatcher = (intervalGap) => (dispatch, getState) => {
-  dispatch(requestSearch());
+export const requestFullProxySearchDispatcher = (intervalGap, currentSearchType) => (dispatch, getState) => {
+  dispatch(requestSearch(currentSearchType));
   const iter = new doFullSearch(intervalGap, dispatch, getState);
   iter.startSearching();
 }
 
 
-function doFullSearch(intervalGap = 1000, dispatch, getState) {
+function doFullSearch(intervalGap, dispatch, getState) {
   this.currentPosition = 0;
   this.elementsLength = 256;
   this.baseUrl = 'http://172.16.';

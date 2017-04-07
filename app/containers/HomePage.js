@@ -17,7 +17,8 @@ const HomePage = (
     selectedType,
     toggleSelectedType,
     requestQuickProxySearch,
-    stopSearching
+    stopSearching,
+    currentSearchType
   }) => (
     <Home
       requestFullProxySearch={requestFullProxySearch}
@@ -27,17 +28,19 @@ const HomePage = (
       toggleSelectedType={toggleSelectedType}
       requestQuickProxySearch={requestQuickProxySearch}
       stopSearching={stopSearching}
+      currentSearchType={currentSearchType}
     />
   );
 
 const mapStateToProps = (state) => ({
   workingProxyArray: state.main.urlArray,
   isSearching: state.main.isSearching,
-  selectedType: state.main.selectedType
+  selectedType: state.main.selectedType,
+  currentSearchType: state.main.currentSearchType,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  requestFullProxySearch: () => { dispatch(requestFullProxySearchDispatcher()) },
+  requestFullProxySearch: (type) => { dispatch(requestFullProxySearchDispatcher(1000, type)) },
   toggleSelectedType: () => { dispatch(toggleSelectedType()) },
   requestQuickProxySearch: () => { dispatch(requestQuickProxySearchDispatcher()) },
   stopSearching: () => { dispatch(stopSearchingDispatcher()) },
