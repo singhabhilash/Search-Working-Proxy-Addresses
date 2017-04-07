@@ -34,7 +34,10 @@ const Home = ({
                 }
               }>Search</button>
             }
-            <button onClick={() => {stopSearching(); console.log('stop click', stopSearching)}}>Stop</button>
+            {
+              classFull !== null && isSearching &&
+              <button onClick={() => {stopSearching(); console.log('stop click', stopSearching)}}>Stop</button>
+            }
             {
               isSearching && selectedType==='full' &&
               <Halogen.BeatLoader color={'white'} size="12px" />
@@ -57,6 +60,10 @@ const Home = ({
                   requestQuickProxySearch();
                 }
               }>Search</button>
+            }
+            {
+              isSearching && selectedType==='quick' &&
+              <Halogen.BeatLoader color={'white'} size="12px" />
             }
             {
               isSearching && selectedType==='quick' &&

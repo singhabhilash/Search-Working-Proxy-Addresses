@@ -1,6 +1,8 @@
 import request from 'request';
 import * as actionTypes from '../constants/actionTypes';
 
+import insertProxyInDatabase from '../apis/db';
+
 const requestSearch = () => ({
   type: actionTypes.REQUEST_SEARCH
 });
@@ -71,6 +73,7 @@ function doFullSearch(intervalGap = 1000, dispatch, getState) {
           if (checkSanityRes(res)) {
             let fullUrl = res.request.host + ':' + res.request.port;
             dispatch(foundResult(fullUrl));
+            insertProxyInDatabase(fullUrl);
             console.log(fullUrl);
           }
         });
