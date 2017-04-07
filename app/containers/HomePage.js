@@ -4,7 +4,8 @@ import Home from '../components/Home';
 import {
   requestFullProxySearchDispatcher,
   toggleSelectedType,
-  requestQuickProxySearchDispatcher
+  requestQuickProxySearchDispatcher,
+  stopSearchingDispatcher,
 } from '../actions';
 import { connect } from 'react-redux';
 
@@ -15,7 +16,8 @@ const HomePage = (
     requestFullProxySearch,
     selectedType,
     toggleSelectedType,
-    requestQuickProxySearch
+    requestQuickProxySearch,
+    stopSearching
   }) => (
     <Home
       requestFullProxySearch={requestFullProxySearch}
@@ -24,6 +26,7 @@ const HomePage = (
       selectedType={selectedType}
       toggleSelectedType={toggleSelectedType}
       requestQuickProxySearch={requestQuickProxySearch}
+      stopSearching={stopSearching}
     />
   );
 
@@ -36,7 +39,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   requestFullProxySearch: () => { dispatch(requestFullProxySearchDispatcher()) },
   toggleSelectedType: () => { dispatch(toggleSelectedType()) },
-  requestQuickProxySearch: () => { dispatch(requestQuickProxySearchDispatcher()) }
+  requestQuickProxySearch: () => { dispatch(requestQuickProxySearchDispatcher()) },
+  stopSearching: () => { dispatch(stopSearchingDispatcher()) },
 });
 
 export default connect(

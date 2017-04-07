@@ -20,22 +20,25 @@ const foundResult = (workingUrl) => ({
   result: workingUrl
 });
 
-export const toggleSelectedType = () => ({
-  type: actionTypes.TOGGLE_SELECTED_TYPE
+const stopSearching = () => ({
+  type: actionTypes.STOP_SEARCHING
 });
 
 
-export const requestFullProxySearchDispatcher = (intervalGap) => (dispatch) => {
+export const requestFullProxySearchDispatcher = (intervalGap) => (dispatch, getState) => {
   dispatch(requestSearch());
-  const iter = new doFullSearch(intervalGap, dispatch);
+  const iter = new doFullSearch(intervalGap, dispatch, getState);
   iter.startSearching();
 }
 
-function doFullSearch(intervalGap = 1000, dispatch) {
+
+function doFullSearch(intervalGap = 1000, dispatch, getState) {
   this.currentPosition = 0;
   this.elementsLength = 256;
   this.baseUrl = 'http://172.16.';
   this.interval = null;
+
+
 
   this.startSearching = function () {
     dispatch(searchStarted());
@@ -56,6 +59,11 @@ function doFullSearch(intervalGap = 1000, dispatch) {
     var n = this.currentPosition;
 
     for (var port of ['3128', '808', '8080']) {
+      if(getState().main.isSearching === false) {
+        dispatch(searchFinished());
+        clearInterval(this.interval);
+        return;
+      }
       for (var i = 0; i < 256; i++) {
         var proxyUrl = this.baseUrl + this.currentPosition.toString() + '.' + i.toString() + ':' + port;
         var proxiedRequest = request.defaults({ proxy: proxyUrl });
@@ -73,18 +81,12 @@ function doFullSearch(intervalGap = 1000, dispatch) {
   }
 }
 
-const arrayUrl = [
-  '0.0.0.0:3128',
-  '0.0.0.0:3128',
-  '0.0.0.0:3128',
-  '0.0.0.0:3128'
-];
 
 export const requestQuickProxySearchDispatcher = () => (dispatch) => {
   doQuickSearch(arrayProxyUrl, dispatch);
 }
 
-function doQuickSearch(arrayProxyUrl = arrayUrl, dispatch) {
+function doQuickSearch(arrayProxyUrl, dispatch) {
   for (let url of arrayProxyUrl) {
     let proxiedRequest = request.defaults({ proxy: url });
     proxiedRequest.get('http://google.com', function (err, res) {
@@ -102,3 +104,18 @@ function checkSanityRes(res) {
     return true;
   return false;
 }
+
+export const stopSearchingDispatcher = () => (dispatch) => {
+  dispatch(stopSearching());
+}
+
+
+/*************************************************************
+*
+*  UI Actions
+*
+*************************************************************/
+
+export const toggleSelectedType = () => ({
+  type: actionTypes.TOGGLE_SELECTED_TYPE
+});

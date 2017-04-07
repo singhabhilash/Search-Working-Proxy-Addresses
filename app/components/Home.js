@@ -3,25 +3,17 @@ import React, { Component } from 'react';
 let Halogen = require('halogen');
 import styles from './Home.css';
 
-const devProxyArray = [
-  '0.0.0.0.:8080',
-  '0.0.0.0.:8080',
-  '0.0.0.0.:8080',
-  '0.0.0.0.:8080',
-  '0.0.0.0.:8080'
-];
-
 const Home = ({
   requestFullProxySearch,
   workingProxyArray,
   isSearching,
   selectedType,
   toggleSelectedType,
-  requestQuickProxySearch
+  requestQuickProxySearch,
+  stopSearching
 }) => {
   const classFull = selectedType === 'full' ? styles.selected : null;
   const classQuick = selectedType === 'quick' ? styles.selected : null;
-  workingProxyArray = devProxyArray;
   return (
     <div className={styles.wrap}>
       <div className={styles.options}>
@@ -42,6 +34,7 @@ const Home = ({
                 }
               }>Search</button>
             }
+            <button onClick={() => {stopSearching(); console.log('stop click', stopSearching)}}>Stop</button>
             {
               isSearching && selectedType==='full' &&
               <Halogen.BeatLoader color={'white'} size="12px" />
