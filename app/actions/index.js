@@ -24,9 +24,10 @@ export const toggleSelectedType = () => ({
   type: actionTypes.TOGGLE_SELECTED_TYPE
 });
 
+
 export const requestFullProxySearchDispatcher = (intervalGap) => (dispatch) => {
   dispatch(requestSearch());
-  let iter = new doFullSearch(intervalGap, dispatch);
+  const iter = new doFullSearch(intervalGap, dispatch);
   iter.startSearching();
 }
 
@@ -72,11 +73,18 @@ function doFullSearch(intervalGap = 1000, dispatch) {
   }
 }
 
+const arrayUrl = [
+  '0.0.0.0:3128',
+  '0.0.0.0:3128',
+  '0.0.0.0:3128',
+  '0.0.0.0:3128'
+];
+
 export const requestQuickProxySearchDispatcher = () => (dispatch) => {
   doQuickSearch(arrayProxyUrl, dispatch);
 }
 
-function doQuickSearch(arrayProxyUrl, dispatch) {
+function doQuickSearch(arrayProxyUrl = arrayUrl, dispatch) {
   for (let url of arrayProxyUrl) {
     let proxiedRequest = request.defaults({ proxy: url });
     proxiedRequest.get('http://google.com', function (err, res) {
