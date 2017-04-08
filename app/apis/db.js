@@ -10,7 +10,7 @@ db.loadDatabase()
   .catch(err => console.log(err));
 
 
-async function insertProxyInDatabase(url) {
+export default async function insertProxyInDatabase(url) {
   const isInDB = await
     db.find({ url: url })
       .then(res => {
@@ -28,5 +28,9 @@ async function insertProxyInDatabase(url) {
   }
 };
 
-
-export default insertProxyInDatabase;
+export function getAllInDB() {
+  return new Promise(function(resolve, reject) {
+    db.find({})
+      .then(res => resolve(res));
+  }
+)};

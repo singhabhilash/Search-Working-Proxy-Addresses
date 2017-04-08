@@ -1,5 +1,6 @@
 import request from 'request';
 import * as actionTypes from '../constants/actionTypes';
+import { getAllInDB } from '../apis/db';
 
 import insertProxyInDatabase from '../apis/db';
 
@@ -62,7 +63,7 @@ function doFullSearch(intervalGap, dispatch, getState) {
     var n = this.currentPosition;
 
     for (var port of ['3128', '808', '8080']) {
-      if(getState().main.isSearching === false) {
+      if (getState().main.isSearching === false) {
         dispatch(searchFinished());
         clearInterval(this.interval);
         return;
@@ -87,18 +88,25 @@ function doFullSearch(intervalGap, dispatch, getState) {
 
 
 export const requestQuickProxySearchDispatcher = () => (dispatch) => {
-  doQuickSearch(arrayProxyUrl, dispatch);
+  getAllInDB()
+    .then(res => res.map(item => item.url))
+    .then(res => {doQuickSearch(res, dispatch)});
+  //doQuickSearch(arrayProxyUrl, dispatch);
 }
 
 function doQuickSearch(arrayProxyUrl, dispatch) {
+  console.log(arrayProxyUrl);
   for (let url of arrayProxyUrl) {
     let proxiedRequest = request.defaults({ proxy: url });
     proxiedRequest.get('http://google.com', function (err, res) {
       if (checkSanityRes(res)) {
         //Proxy is working, dispatch action
+        let fullUrl = res.request.host + ':' + res.request.port;
+        dispatch(foundResult(fullUrl));
       }
     });
   }
+  dispatch(searchFinished());
 }
 
 
