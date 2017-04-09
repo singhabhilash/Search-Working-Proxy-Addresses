@@ -17,11 +17,11 @@ const QuickSearch = ({
 
       <div className={styles.flexContainer}>
         {
-          classQuick !== null &&
+          (classQuick !== null || (isSearching === true && currentSearchType === 'quick')) &&
           <button onClick={
             (e) => {
               e.preventDefault();
-              requestQuickProxySearch();
+              requestQuickProxySearch('quick');
             }
           }>Search</button>
         }

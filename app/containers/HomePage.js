@@ -42,7 +42,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   requestFullProxySearch: (type) => { dispatch(requestFullProxySearchDispatcher(1000, type)) },
   toggleSelectedType: () => { dispatch(toggleSelectedType()) },
-  requestQuickProxySearch: () => { dispatch(requestQuickProxySearchDispatcher()) },
+  requestQuickProxySearch: (type) => { dispatch(requestQuickProxySearchDispatcher(type)) },
   stopSearching: () => { dispatch(stopSearchingDispatcher()) },
 });
 

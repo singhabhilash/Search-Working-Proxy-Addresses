@@ -87,18 +87,21 @@ function doFullSearch(intervalGap, dispatch, getState) {
 }
 
 
-export const requestQuickProxySearchDispatcher = () => (dispatch) => {
+export const requestQuickProxySearchDispatcher = (currentSearchType) => (dispatch) => {
+  dispatch(requestSearch(currentSearchType));
   getAllInDB()
-    .then(res => res.map(item => item.url))
+    .then(res => res.map(item => 'http://' + item.url))
     .then(res => {doQuickSearch(res, dispatch)});
   //doQuickSearch(arrayProxyUrl, dispatch);
 }
 
 function doQuickSearch(arrayProxyUrl, dispatch) {
-  console.log(arrayProxyUrl);
+  dispatch(searchStarted());
   for (let url of arrayProxyUrl) {
+    console.log(url);
     let proxiedRequest = request.defaults({ proxy: url });
     proxiedRequest.get('http://google.com', function (err, res) {
+      console.log('res', res);
       if (checkSanityRes(res)) {
         //Proxy is working, dispatch action
         let fullUrl = res.request.host + ':' + res.request.port;
