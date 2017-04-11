@@ -4,27 +4,27 @@ import { getAllInDB } from '../apis/db';
 
 import insertProxyInDatabase from '../apis/db';
 
-const requestSearch = (searchType) => ({
+export const requestSearch = (searchType) => ({
   type: actionTypes.REQUEST_SEARCH,
   currentSearchType: searchType
 });
 
-const searchStarted = () => ({
+export const searchStarted = () => ({
   type: actionTypes.SEARCH_STARTED,
   isSearching: true
 });
 
-const searchFinished = () => ({
+export const searchFinished = () => ({
   type: actionTypes.SEARCH_FINISHED,
   isSearching: false
 });
 
-const foundResult = (workingUrl) => ({
+export const foundResult = (workingUrl) => ({
   type: actionTypes.FOUND_RESULT,
   result: workingUrl
 });
 
-const stopSearching = () => ({
+export const stopSearching = () => ({
   type: actionTypes.STOP_SEARCHING
 });
 
