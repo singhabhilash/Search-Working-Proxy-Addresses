@@ -14,13 +14,16 @@ const router = routerMiddleware(hashHistory);
 
 /* eslint-enable no-underscore-dangle */
 
+const enhancer = compose(
+  applyMiddleware(thunk, router, logger)
+);
+
 export default function configureStore() {
   const store = createStore(
     rootReducer,
-    applyMiddleware(
-      thunk,
-      logger
-    ));
+    undefined,
+    enhancer,
+  );
 
   if (module.hot) {
     module.hot.accept('../reducers', () =>

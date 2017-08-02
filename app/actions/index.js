@@ -29,11 +29,12 @@ export const stopSearching = () => ({
 });
 
 
-export const requestFullProxySearchDispatcher = (intervalGap, currentSearchType) => (dispatch, getState) => {
-  dispatch(requestSearch(currentSearchType));
-  const iter = new doFullSearch(intervalGap, dispatch, getState);
-  iter.startSearching();
-}
+export const requestFullProxySearchDispatcher = (
+  intervalGap, currentSearchType) => (dispatch, getState) => {
+    dispatch(requestSearch(currentSearchType));
+    const iter = new doFullSearch(intervalGap, dispatch, getState);
+    iter.startSearching();
+  };
 
 
 function doFullSearch(intervalGap, dispatch, getState) {
@@ -41,8 +42,6 @@ function doFullSearch(intervalGap, dispatch, getState) {
   this.elementsLength = 256;
   this.baseUrl = 'http://172.16.';
   this.interval = null;
-
-
 
   this.startSearching = function () {
     dispatch(searchStarted());
@@ -91,7 +90,7 @@ export const requestQuickProxySearchDispatcher = (currentSearchType) => (dispatc
   dispatch(requestSearch(currentSearchType));
   getAllInDB()
     .then(res => res.map(item => 'http://' + item.url))
-    .then(res => {doQuickSearch(res, dispatch)});
+    .then(res => { doQuickSearch(res, dispatch) });
   //doQuickSearch(arrayProxyUrl, dispatch);
 }
 
@@ -111,7 +110,6 @@ function doQuickSearch(arrayProxyUrl, dispatch) {
   }
   dispatch(searchFinished());
 }
-
 
 
 function checkSanityRes(res) {
